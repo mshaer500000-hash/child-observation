@@ -1,9 +1,10 @@
 {
-  "name": "برنامج ملاحظة الطفل - المستكشفون الصغار",
+  "name": "برنامج ملاحظة الطفل",
   "short_name": "ملاحظة الطفل",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#f4f8f8",
+  "background_color": "#ffffff",
   "theme_color": "#0f8f83",
   "lang": "ar",
   "dir": "rtl",
