@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0f8f83">
+<title>بطاقة معلومات الطفل</title>
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+:root{--teal:#0f8f83;--teal2:#dff5f1;--ink:#25323a;--muted:#6d7a80;--line:#d9e1e3;--bg:#f4f8f8}
+*{box-sizing:border-box}body{margin:0;font-family:Tahoma,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+.app{max-width:980px;margin:auto;padding:12px}.top{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px 16px;margin-bottom:12px;display:flex;justify-content:space-between;gap:10px;align-items:center}
+h1{font-size:22px;margin:0;color:#185c57}.sub{font-size:12px;color:var(--muted);margin-top:4px}
+.btn{border:0;border-radius:12px;padding:10px 14px;cursor:pointer;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+.primary{background:var(--teal);color:#fff}.soft{background:var(--teal2);color:#116b63}.light{background:#fff;border:1px solid var(--line);color:#425159}
+.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:12px}
+.panel h2{font-size:16px;margin:0 0 10px;color:#185c57}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.field{display:flex;flex-direction:column;gap:5px}.full{grid-column:1/-1}.field label{font-size:12px;font-weight:700;color:#536267}
+input,textarea,select{width:100%;border:1px solid var(--line);border-radius:10px;padding:9px 10px;font:inherit;background:#fff}
+textarea{min-height:70px;resize:vertical}.opts{display:flex;gap:12px;flex-wrap:wrap;border:1px solid var(--line);border-radius:10px;padding:9px}
+.opts label{display:flex;gap:5px;align-items:center;font-weight:400}.signature{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.signature img{width:170px;height:70px;object-fit:contain;border:1px solid var(--line);border-radius:10px;background:#fafafa}
+.actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between;align-items:center;margin-top:10px}.status{font-size:12px;color:var(--muted)}
+.student-select{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.student-select select{max-width:320px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.full{grid-column:auto}.top{align-items:flex-start;flex-direction:column}}
+@media print{
+@page{size:A4 portrait;margin:10mm}body{background:#fff}.no-print{display:none!important}.app{max-width:none;padding:0}.top{border:0;padding:0;margin-bottom:6px}.top h1{text-align:center;width:100%;font-size:18px}.sub{text-align:center}
+.panel{border:0;padding:0;margin:5px 0}.panel h2{font-size:11px;border-bottom:1px solid #8fbfba;padding-bottom:2px;margin-bottom:4px}.grid{gap:3px 8px}.field{font-size:9px}.field label{font-size:9px}.field input,.field textarea,.field .opts{border:0;border-bottom:1px dotted #aaa;border-radius:0;padding:2px 0;font-size:9px;min-height:16px}.field textarea{min-height:28px}
+.signature img{width:120px;height:45px}.footer-sign{display:grid!important;grid-template-columns:1fr 1fr 1fr;gap:10px;text-align:center;margin-top:18px;font-size:10px}.stamp{width:75px;height:58px;border:1px dashed #999;border-radius:50%;margin:auto;display:flex;align-items:center;justify-content:center;color:#777}
+}
+.footer-sign{display:none}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <div>
+      <h1>بطاقة معرفة الطفل</h1>
+      <div class="sub">الصف: المستكشفون الصغار • العام الدراسي ١٤٤٨هـ</div>
+    </div>
+    <a class="btn light no-print" href="index.html">العودة لبرنامج الملاحظة</a>
+  </div>
+
+  <div class="panel no-print">
+    <div class="student-select">
+      <strong>اختيار الطفل:</strong>
+      <select id="childSelect"></select>
+      <button class="btn soft" id="addChildBtn" type="button">إضافة طفل</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>أولًا: بيانات الطفل والأسرة</h2>
+    <div class="grid">
+      <div class="field"><label>اسم الطفل الثلاثي</label><input id="fullName"></div>
+      <div class="field"><label>اسم الدلع</label><input id="nickname"></div>
+      <div class="field"><label>اسم الأب</label><input id="fatherName"></div>
+      <div class="field"><label>عمل الأب ومؤهله</label><input id="fatherJobQual"></div>
+      <div class="field"><label>رقم جوال الأب</label><input id="fatherPhone" inputmode="tel"></div>
+      <div class="field"><label>اسم الأم</label><input id="motherName"></div>
+      <div class="field"><label>عمل الأم ومؤهلها</label><input id="motherJobQual"></div>
+      <div class="field"><label>رقم جوال الأم</label><input id="motherPhone" inputmode="tel"></div>
+      <div class="field full"><label>رقم إضافي للتواصل عند الحاجة</label><input id="altPhone" inputmode="tel"></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>ثانيًا: التواصل والاستلام</h2>
+    <div class="grid">
+      <div class="field"><label>شخص من الأسرة للتواصل عند تعذر الوصول للوالدين - الاسم</label><input id="emergencyName"></div>
+      <div class="field"><label>صلة القرابة</label><input id="emergencyRelation"></div>
+      <div class="field"><label>رقم الجوال</label><input id="emergencyPhone" inputmode="tel"></div>
+      <div class="field"><label>الشخص المخوّل باستلام الطفل - الاسم</label><input id="pickupName"></div>
+      <div class="field"><label>صلة القرابة</label><input id="pickupRelation"></div>
+      <div class="field"><label>رقم الجوال</label><input id="pickupPhone" inputmode="tel"></div>
+      <div class="field"><label>هل يحضر الطفل مع سائق خاص؟</label><div class="opts"><label><input type="radio" name="driver" value="نعم"> نعم</label><label><input type="radio" name="driver" value="لا"> لا</label></div></div>
+      <div class="field"><label>رقم جوال السائق</label><input id="driverPhone" inputmode="tel"></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>ثالثًا: معلومات مهمة عن الطفل</h2>
+    <div class="grid">
+      <div class="field"><label>هل يعيش الطفل مع والديه؟</label><div class="opts"><label><input type="radio" name="lives" value="نعم"> نعم</label><label><input type="radio" name="lives" value="لا"> لا</label></div></div>
+      <div class="field"><label>إذا كانت الإجابة «لا»: مع من يعيش؟</label><input id="livesWithWhom"></div>
+      <div class="field full"><label>السبب</label><input id="livesReason"></div>
+      <div class="field full"><label>هل يعاني الطفل من حساسية أو مشكلة صحية؟</label><textarea id="healthIssue"></textarea></div>
+      <div class="field full"><label>هل يعاني الطفل من مشكلة نفسية أو سلوكية سبق تشخيصها أو متابعتها؟</label><textarea id="psychIssue"></textarea></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>رابعًا: موافقات ولي الأمر</h2>
+    <div class="grid">
+      <div class="field full"><label>الموافقة على تصوير الطفل في فعاليات وأنشطة الروضة للأغراض التعليمية والتوثيقية</label><div class="opts"><label><input type="radio" name="photoConsent" value="أوافق"> أوافق</label><label><input type="radio" name="photoConsent" value="لا أوافق"> لا أوافق</label></div></div>
+      <div class="field full"><label>الموافقة على استخدام صورة الطفل في أدوات الذكاء الاصطناعي لأغراض تعليمية وتصميم مواد تربوية خاصة بعمل المعلمة أو الروضة، دون استخدام تجاري أو نشر خارج السياق التربوي</label><div class="opts"><label><input type="radio" name="aiConsent" value="أوافق"> أوافق</label><label><input type="radio" name="aiConsent" value="لا أوافق"> لا أوافق</label></div></div>
+      <div class="field"><label>اسم والدة الطفل</label><input id="motherSignerName"></div>
+      <div class="field"><label>توقيع والدة الطفل</label><div class="signature"><img id="signaturePreview" alt="توقيع الأم"><label class="btn soft no-print" for="signatureUpload">رفع صورة التوقيع</label><input id="signatureUpload" type="file" accept="image/*" hidden></div></div>
+    </div>
+  </div>
+
+  <div class="actions no-print">
+    <span class="status" id="status">تحفظ البيانات محليًا على هذا الجهاز.</span>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" id="saveBtn" type="button">حفظ</button><button class="btn soft" id="printBtn" type="button">طباعة البطاقة</button></div>
+  </div>
+
+  <div class="footer-sign">
+    <div><strong>المعلمة</strong><div>مشاعر المهاجري</div></div>
+    <div><strong>ختم الروضة</strong><div class="stamp">الختم</div></div>
+    <div><strong>مديرة الروضة</strong><div>سارة بنت محمد كعكي</div></div>
+  </div>
+</div>
+
+<script>
+const DEFAULT_CHILDREN=["ابراهيم السلمي","ابراهيم باحشوان","بركة هوساوي","بيسان الخزاعي","حامد رمضاني","ديم الحربي","سهم عايض","عماد الخزاعي","مسك حنه","مي سروجي","ميلار فقيه","يزيد الفيفي","يوسف نمير"];
+const FIELDS=["fullName","nickname","fatherName","fatherJobQual","fatherPhone","motherName","motherJobQual","motherPhone","altPhone","emergencyName","emergencyRelation","emergencyPhone","pickupName","pickupRelation","pickupPhone","driverPhone","livesWithWhom","livesReason","healthIssue","psychIssue","motherSignerName"];
+const $=id=>document.getElementById(id);
+let data=JSON.parse(localStorage.getItem("kg_observer_data")||"null")||{children:[...DEFAULT_CHILDREN],observations:{},photos:{},childInfo:{}};
+data.children??=[...DEFAULT_CHILDREN];data.childInfo??={};
+let selected=data.children[0]||"";
+function persist(){localStorage.setItem("kg_observer_data",JSON.stringify(data))}
+function radio(name){const x=document.querySelector(`input[name="${name}"]:checked`);return x?x.value:""}
+function setRadio(name,val){document.querySelectorAll(`input[name="${name}"]`).forEach(x=>x.checked=x.value===val)}
+function info(){data.childInfo[selected]??={};return data.childInfo[selected]}
+function renderChildren(){const s=$("childSelect");s.innerHTML="";data.children.forEach(n=>{const o=document.createElement("option");o.value=n;o.textContent=n;if(n===selected)o.selected=true;s.appendChild(o)})}
+function load(){if(!selected)return;const i=info();FIELDS.forEach(k=>$(k).value=i[k]||"");setRadio("driver",i.driver||"");setRadio("lives",i.lives||"");setRadio("photoConsent",i.photoConsent||"");setRadio("aiConsent",i.aiConsent||"");$("signaturePreview").src=i.motherSignature||"data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22170%22 height=%2270%22%3E%3Crect width=%22100%25%22 height=%22100%25%22 fill=%22%23f3f6f6%22/%3E%3Ctext x=%2250%25%22 y=%2254%25%22 text-anchor=%22middle%22 font-size=%2211%22 fill=%22%23708085%22%3Eتوقيع الأم%3C/text%3E%3C/svg%3E"}
+function save(){if(!selected)return;const i=info();FIELDS.forEach(k=>i[k]=$(k).value.trim());i.driver=radio("driver");i.lives=radio("lives");i.photoConsent=radio("photoConsent");i.aiConsent=radio("aiConsent");persist();$("status").textContent="تم الحفظ ✓";setTimeout(()=>$("status").textContent="تحفظ البيانات محليًا على هذا الجهاز.",1300)}
+$("childSelect").onchange=e=>{save();selected=e.target.value;load()};
+$("addChildBtn").onclick=()=>{const n=prompt("اكتبي اسم الطفل الأول والأخير:");if(!n)return;const name=n.trim();if(!name)return;if(!data.children.includes(name))data.children.push(name);selected=name;persist();renderChildren();load()};
+$("signatureUpload").onchange=e=>{const f=e.target.files[0];if(!f||!selected)return;const r=new FileReader();r.onload=()=>{info().motherSignature=r.result;persist();load()};r.readAsDataURL(f)};
+$("saveBtn").onclick=save;$("printBtn").onclick=()=>{save();window.print()};
+renderChildren();load();
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+</script>
+</body></html>
